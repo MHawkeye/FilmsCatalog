@@ -34,27 +34,60 @@ namespace FilmsCatalog.Controllers
 
             var users = _db.Users.Where(c => c.Email == claims.Value.ToString());
 
-            return users.First();
+                return users.First();
         }
 
-        public async Task<IActionResult> Index(int page=1)
+        [AllowAnonymous]
+        public IActionResult Index(int? id)
         {
-            int pageSize = 1;
+            if (id == null)
+            {
+                return RedirectToAction(nameof(AllFilms));
+            }
+            else
+            {
+                bool isEmail = false;
+
+                var movie = _db.Movies.Include(c => c.User).Where(m => m.Id == id);
+
+                if (movie.Any())
+                {
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        if (movie.First().User.Email == UserEmail().Email.ToString())
+                        {
+                            isEmail = true;
+                        }
+                    }
+
+                    ViewBag.isEmail = isEmail;
+                    return View(movie.First());
+                }
+                else
+                {
+                    return StatusCode(401);
+                }
+            }
+
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> AllFilms(int page = 1)
+        {
+            int pageSize = 6;
 
             IQueryable<Movie> source = _db.Movies.Include(c => c.User);
             var count = await source.CountAsync();
             var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-            var isEmail = items.Any(m => m.User.Email == UserEmail().Email.ToString());
-
+ 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             IndexViewModel viewModel = new IndexViewModel
             {
                 PageViewModel = pageViewModel,
-                Movies = items,
-                IsEmail = isEmail
+                Movies = items
             };
             return View(viewModel);
         }
+
 
         public IActionResult Create()
         {
@@ -168,14 +201,9 @@ namespace FilmsCatalog.Controllers
             IndexViewModel viewModel = new IndexViewModel
             {
                 PageViewModel = pageViewModel,
-                Movies = items,
-                IsEmail = true
+                Movies = items
             };
             return View(viewModel);
         }
-
-
-        
-
     }
 }

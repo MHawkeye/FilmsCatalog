@@ -10,6 +10,5 @@ namespace FilmsCatalog.Models.ViewModel
         public IEnumerable<Movie> Movies { get; set; }
         public PageViewModel PageViewModel { get; set; }
 
-        public bool IsEmail { get; set; }
     }
 }

@@ -69,7 +69,7 @@ namespace FilmsCatalog
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Movie}/{action=AllFilms}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
