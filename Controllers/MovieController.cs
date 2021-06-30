@@ -73,7 +73,7 @@ namespace FilmsCatalog.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AllFilms(int page = 1)
         {
-            int pageSize = 6;
+            int pageSize = 4;
 
             IQueryable<Movie> source = _db.Movies.Include(c => c.User);
             var count = await source.CountAsync();
