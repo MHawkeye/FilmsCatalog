@@ -1,0 +1,63 @@
+﻿@using FilmsCatalog.Models.ViewModel
+@model IndexViewModel
+
+
+@if (Model.Movies.Count() > 0)
+{
+    @foreach (var obj in Model.Movies)
+    {
+        <div class="container d-lg-flex p-2 m-2">
+
+            <div class="col-lg-6 col-sm-12 mb-2">
+                <img src="@("~/images/" + obj.Poster)" asp-append-version="true" class="img-thumbnail" />
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <label asp-for="@obj.Name" class="font-weight-bold"></label>
+                <p>@obj.Name</p>
+
+                <br />
+                <label asp-for="@obj.Description" class="font-weight-bold"></label>
+                <p>@obj.Description</p>
+
+                <br />
+                <label asp-for="@obj.Year_of_release" class="font-weight-bold"></label>
+                <p>@obj.Year_of_release</p>
+
+                <br />
+                <label asp-for="@obj.Producer" class="font-weight-bold"></label>
+                <p>@obj.Producer</p>
+
+                @if (Model.IsEmail)
+                {
+                    <a asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary">Изменить</a>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>Фильмы отсутствуют</p>
+}
+
+
+<div class="container fixed-bottom mb-5">
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+           class="btn btn-outline-dark">
+            Назад
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+           class="btn btn-outline-dark">
+            Вперед
+        </a>
+    }
+
+</div>
+

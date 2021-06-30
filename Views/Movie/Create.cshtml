@@ -1,0 +1,88 @@
+﻿@model FilmsCatalog.Models.Movie
+
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <h2 class="text-info pl-3">Добавление категорий</h2>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-8">
+                <div class="form-group row m-2">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row m-2">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row m-2">
+                    <div class="col-4">
+                        <label asp-for="Year_of_release"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Year_of_release" class="form-control" />
+                        <span asp-validation-for="Year_of_release" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row m-2">
+                    <div class="col-4">
+                        <label asp-for="Producer"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Producer" class="form-control" />
+                        <span asp-validation-for="Producer" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row m-2">
+                    <div class="col-4">
+                        <label asp-for="Image"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Image" accept="image/*" class="form-control" />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Создать" />
+                        </div>
+
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success">К списку</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
